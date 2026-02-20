@@ -1,8 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Travel Agent
-Comment=Run the Dynamic Travel Packing Assistant
-Exec=bash -lc 'set -e; cd "$(dirname "%k")"; if [ "$(uname -s)" != "Linux" ]; then echo "This launcher is for Linux."; read -r -n 1 -s -p "Press any key to close..."; echo; exit 1; fi; if [ -x .venv/bin/python ]; then VENV_PY=.venv/bin/python; else if command -v python3 >/dev/null 2>&1; then BASE_PY=python3; elif command -v python >/dev/null 2>&1; then BASE_PY=python; else echo "Python is not installed. Install Python 3.10+ and try again."; read -r -n 1 -s -p "Press any key to close..."; echo; exit 1; fi; echo "Creating local virtual environment (.venv)..."; "$BASE_PY" -m venv .venv; VENV_PY=.venv/bin/python; fi; if ! "$VENV_PY" -c "import smolagents,requests,dotenv,ddgs; from smolagents import DuckDuckGoSearchTool" >/dev/null 2>&1; then echo "Installing required packages (this may take a minute)..."; "$VENV_PY" -m pip install --upgrade pip; "$VENV_PY" -m pip install "smolagents[openai]" python-dotenv requests ddgs; fi; if [ -z "${HUGGINGFACE_HUB_TOKEN:-}" ] && ! grep -q "^HUGGINGFACE_HUB_TOKEN=" .env 2>/dev/null; then echo "Missing Hugging Face token. Create .env with:"; echo "HUGGINGFACE_HUB_TOKEN=hf_your_token_here"; read -r -n 1 -s -p "Press any key to close..."; echo; exit 1; fi; "$VENV_PY" travel_agent.py; EXIT_CODE=$?; echo; read -r -n 1 -s -p "Press any key to close..."; echo; exit $EXIT_CODE'
-Terminal=true
-Categories=Utility;
