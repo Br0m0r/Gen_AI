@@ -21,11 +21,24 @@ It fetches live weather data, reasons about temperature and conditions, and retu
 
 - `travel_agent.py`: Main Python script. Prompts for destination and generates a packing list.
 - `.env`: Environment file storing the Hugging Face token.
-- Dependencies: `smolagents`, `requests`, `python-dotenv`.
+- Dependencies: `smolagents`, `requests`, `python-dotenv`, `ddgs`.
 
 ---
 
 ## Setup Instructions
+
+### One-click launcher (easy mode)
+
+- Windows: Double-click `Travel_Agent.cmd`
+- Linux: Double-click `Travel_Agent.desktop` in GUI file managers that support desktop entries
+
+The launcher auto-detects OS, creates `.venv` if needed, installs required packages, and starts the agent.
+
+Linux note: if needed, make launchers executable first:
+
+```bash
+chmod +x Travel_Agent.desktop
+```
 
 ### 1. Clone the repository
 
@@ -79,7 +92,7 @@ source venv/bin/activate
 ### 4. Install dependencies
 
 ```bash
-pip install smolagents[openai] python-dotenv requests
+pip install smolagents[openai] python-dotenv requests ddgs
 ```
 
 ### 5. Set up the Hugging Face API token

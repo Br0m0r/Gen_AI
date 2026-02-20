@@ -1,10 +1,24 @@
 import os
-import requests
-from smolagents import CodeAgent, OpenAIServerModel, tool, DuckDuckGoSearchTool
-from dotenv import load_dotenv
+from pathlib import Path
 
-# Load environment variables
-load_dotenv()
+import requests
+try:
+    from smolagents import CodeAgent, OpenAIServerModel, tool, DuckDuckGoSearchTool
+except ImportError as exc:
+    raise ImportError(
+        "Missing smolagents dependencies. Install with: "
+        "pip install \"smolagents[openai]\" duckduckgo-search"
+    ) from exc
+
+try:
+    from dotenv import load_dotenv
+except ImportError as exc:
+    raise ImportError(
+        "Missing python-dotenv. Install with: pip install python-dotenv"
+    ) from exc
+
+# Load environment variables from this script's directory
+load_dotenv(dotenv_path=Path(__file__).with_name(".env"))
 api_token = os.getenv("HUGGINGFACE_HUB_TOKEN")
 if not api_token:
     raise ValueError("Missing HUGGINGFACE_HUB_TOKEN environment variable")
@@ -94,14 +108,14 @@ Step 4: Based on the temperature and weather, suggest 5 essential clothing items
 
 Step 5: Return the final answer EXACTLY in this format:
 
-• item 1
-• item 2
-• item 3
-• item 4
-• item 5
+- item 1
+- item 2
+- item 3
+- item 4
+- item 5
 
 Location: <location>
-Temperature: <temperature_c>°C
+Temperature: <temperature_c>C
 Weather: <description>
 """
 
@@ -113,3 +127,4 @@ result = agent.run(prompt)
 
 print("\n=== FINAL ANSWER ===\n")
 print(result)
+
